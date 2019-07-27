@@ -6,6 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --env.mode production",
+    "heroku-postbuild": "npm run build",
+    "start": "node app.js",
     "start:dev": "webpack-dev-server  --env.mode development --open"
   },
   "repository": {
@@ -62,6 +64,8 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }

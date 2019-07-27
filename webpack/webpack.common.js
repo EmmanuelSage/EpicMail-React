@@ -51,6 +51,8 @@ module.exports = {
     modules: [path.resolve(__dirname, '../src'), 'node_modules'],
     alias: {
       '<src>': path.resolve(__dirname, '../src'),
+      '<helpers>': path.resolve(__dirname, '../src/helpers'),
+      '<uicomponents>': path.resolve(__dirname, '../src/components/UI'),
     },
     extensions: [' ', '.js', '.jsx'],
   },

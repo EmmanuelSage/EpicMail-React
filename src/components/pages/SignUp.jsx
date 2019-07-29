@@ -1,10 +1,20 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {
+  func, bool, object, oneOfType, string,
+} from 'prop-types';
 import Header from '<src>/components/UI/Header';
 import Spinner from '<src>/components/UI/Spinner';
 import Background from '<src>/components/UI/Background';
-import { setCookie } from '<helpers>/auth';
+import { registerAction, processingRequest } from '<redux>/actions/authActions';
 
+/**
+ * @class SignUp
+ * @description SignUp component
+ * @param {object} event - Synthetic event object
+ */
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
@@ -14,19 +24,18 @@ class SignUp extends React.Component {
       email: '',
       password: '',
       confirmPassword: '',
-      isLoggedIn: false,
-      errors: null,
-      isLoading: false,
     };
   }
 
-  onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+  onChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   submitForm = (event) => {
     event.preventDefault();
-    this.setState({ errors: null, isLoading: true });
+
+    const { register, displayLoader } = this.props;
+    displayLoader();
     const {
       email,
       firstName,
@@ -35,52 +44,22 @@ class SignUp extends React.Component {
       confirmPassword,
     } = this.state;
 
-    if (password !== confirmPassword) {
-      const errorMessage = {
-        error: 'Password must equal Confirm Pasword',
-      };
-      this.setState({ errors: errorMessage, isLoading: false });
-      return;
-    }
     const user = {
       email,
       firstName,
       lastName,
       password,
     };
-
-    fetch('https://esepicmail.herokuapp.com/api/v1/auth/signup', {
-      method: 'POST',
-      body: JSON.stringify(user),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then((data) => {
-        if (data.status === 201) {
-          setCookie('token', data.data[0].token, 1);
-          this.setState({ isLoggedIn: true });
-        } else if (data.status === 400) {
-          let errors = '';
-          data.errors.forEach((ele) => {
-            errors += `${ele.error} \n`;
-          });
-          this.setState({ errors: { error: errors }, isLoading: false });
-        } else if (data.status === 409) {
-          this.setState({ errors: data, isLoading: false });
-        }
-      })
-      .catch(() => {
-        const errorMessage = {
-          error: 'An error occured',
-        };
-        this.setState({ errors: errorMessage, isLoading: false });
-      });
+    register(password, confirmPassword, user);
   };
 
+  /**
+   * @method render
+   * @description React render method
+   * @returns {JSX} React component
+   */
   render() {
-    const { isLoading, isLoggedIn } = this.state;
+    const { isLoggedIn, isLoading, errors } = this.props;
     return (
       <>
         {isLoggedIn && <Redirect to="./dashboard" />}
@@ -88,9 +67,9 @@ class SignUp extends React.Component {
         <Background animate={true}>
           <>
             <h1>Sign Up</h1>
-            {this.state.errors && (
+            {errors && (
               <div className="errorDiv">
-                <pre>{this.state.errors.error}</pre>
+                <pre>{errors.error}</pre>
               </div>
             )}
             <form onSubmit={this.submitForm} className="form">
@@ -140,4 +119,42 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp;
+// export default SignUp;
+
+/**
+ * @method mapDispatchToProps
+ * @description maps redux actions to props
+ * @param {callback} dispatch destructured reducer state object
+ * @returns {object} state
+ */
+export const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    register: registerAction,
+    displayLoader: processingRequest,
+  },
+  dispatch,
+);
+
+/**
+ * @method mapStateToProps
+ * @description maps reducer states to props
+ * @param {object} * destructured reducer state object
+ * @returns {object} state
+ */
+export const mapStateToProps = ({ auth }) => {
+  const { isLoggedIn, isLoading, errors } = auth;
+  return { isLoggedIn, isLoading, errors };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SignUp);
+
+SignUp.propTypes = {
+  register: func.isRequired,
+  displayLoader: func.isRequired,
+  isLoggedIn: bool.isRequired,
+  isLoading: bool.isRequired,
+  errors: oneOfType([string, object]).isRequired,
+};

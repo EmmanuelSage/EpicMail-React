@@ -1,0 +1,5 @@
+export const LOGIN_USER = 'LOGIN';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const REGISTER_USER = 'REGISTER';
+export const REGISTER_ERROR = 'REGISTER_ERROR';
+export const PROCESSING_REQUEST = 'PROCESSING_REQUEST';

@@ -53,6 +53,7 @@ module.exports = {
       '<src>': path.resolve(__dirname, '../src'),
       '<helpers>': path.resolve(__dirname, '../src/helpers'),
       '<uicomponents>': path.resolve(__dirname, '../src/components/UI'),
+      '<redux>': path.resolve(__dirname, '../src/redux'),
     },
     extensions: [' ', '.js', '.jsx'],
   },

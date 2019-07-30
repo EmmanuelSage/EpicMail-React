@@ -1,3 +1,4 @@
+import 'regenerator-runtime';
 import BASE_URL from '../../config';
 import {
   LOGIN_USER,
@@ -5,9 +6,10 @@ import {
   REGISTER_USER,
   REGISTER_ERROR,
   PROCESSING_REQUEST,
+  LOG_OUT,
 } from './types';
 
-import { setCookie } from '<helpers>/auth';
+import { setCookie, deleteCookie } from '<helpers>/auth';
 
 /**
  * @method loginAction
@@ -120,4 +122,17 @@ const processingRequest = () => {
   return { type: PROCESSING_REQUEST };
 };
 
-export { loginAction, processingRequest, registerAction };
+/**
+ * @method logOut
+ * @returns {object} action object
+ */
+const logOut = () => {
+  deleteCookie('token');
+  return {
+    type: LOG_OUT,
+  };
+};
+
+export {
+  loginAction, processingRequest, registerAction, logOut,
+};

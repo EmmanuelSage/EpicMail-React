@@ -4,6 +4,7 @@ import {
   REGISTER_USER,
   REGISTER_ERROR,
   PROCESSING_REQUEST,
+  LOG_OUT,
 } from '../actions/types';
 
 const initialState = {
@@ -46,6 +47,12 @@ const authReducer = (state = initialState, { type, payload }) => {
       ...state,
       isLoading: false,
       errors: payload,
+    };
+  case LOG_OUT:
+    return {
+      ...state,
+      isLoggedIn: false,
+      isLoading: false,
     };
   default:
     return state;

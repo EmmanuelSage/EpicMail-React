@@ -19,3 +19,8 @@ export const getCookie = (cookieSearchName) => {
   });
   return cookieValue;
 };
+
+export const deleteCookie = (cookieName) => {
+  // eslint-disable-next-line max-len
+  document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+};

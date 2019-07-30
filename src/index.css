@@ -46,7 +46,7 @@ header a {
   text-transform: uppercase;
 }
 
-header a.current {
+header .current {
   color: #fff;
   font-weight: bold;
   font-size: 1.8rem;
@@ -378,13 +378,14 @@ form .reset-password {
 
 /* Dashboard styling */
 .dash-menu-overlay {
-  display: none;
   height: 100%;
   width: 100%;
   position: fixed;
   z-index: 10;
   top: 0;
   left: 0;
+  bottom: 0;
+  right: 0;
   background-color: rgba(0, 0, 0, 0.5);
   overflow-x: hidden;
   padding-top: 16px;
@@ -417,11 +418,12 @@ form .reset-password {
   font-weight: bold;
   text-decoration: none;
 }
+
 #hamburger-link {
   margin-left: auto;
-  font-size: 3rem;
+  font-size: 5rem;
   color: #fff;
-  padding: 1rem;
+  padding: 0.3rem;
 }
 
 .content-messages {
@@ -429,25 +431,7 @@ form .reset-password {
   height: 50rem;
   overflow: auto;
 }
-/*
-  .content-messages div span{
-    background: rgba(255, 255, 255, 0.924);
-    text-align: left;
-    padding: 0.5rem;
-    border-bottom: 3px solid #eee;
-    list-style-type: none;
-    transition: all 0.15s;
-    margin-bottom: 1rem;
-  }
-  .content-messages div{
-    margin-top: 0.5rem;
-  }
 
-
-  .content-messages div span:hover{
-    box-shadow:2px 2px 10px 2px #97B1BF;
-    background: #53e3a6
-  } */
 
 /* menu edit */
 .compose {
@@ -568,9 +552,7 @@ form .reset-password {
   width: 100%;
 }
 
-.display-none {
-  display: none;
-}
+
 
 #compose-send-to-group-button {
   display: none;
@@ -723,18 +705,15 @@ tr:nth-child(even) {
   transition: 0.4s;
 }
 
-.active,
-.thread:hover {
-  background-color: #ccc;
-}
+
 
 .panel {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.924);
 }
 
 .panel p {
   color: black;
-  padding: 4rem;
+  padding: 2rem;
 }
 
 .panel {
@@ -983,3 +962,53 @@ textarea {
   height: 70%;
 }
 
+.display-none {
+  display: none;
+}
+
+.display-block {
+  display: block;
+}
+
+.visibility-visible {
+  visibility: visible;
+}
+
+.visibility-hidden {
+  visibility: hidden;
+}
+
+.content-menu {
+  padding-bottom: 1rem;
+}
+
+.center-content{
+  text-align: center;
+}
+
+#compose-send-button{
+  width: 25rem;
+}
+
+.margin-auto{
+  margin: auto;
+}
+
+
+.spinner-div {
+  min-width: 32rem;
+  text-align: center;
+}
+
+.color-grey{
+  padding-top: 1rem;
+  color: rgb(51, 50, 50);
+}
+
+.overflow-wrap{
+  overflow-wrap: break-word;
+}
+
+.error-message-margin-top{
+  margin-top: 4rem;
+}
